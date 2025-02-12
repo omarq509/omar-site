@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موقع بسيط مع إدخال صوتي</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>موقع بسيط مع إدخال صوتي</h1>
+    <p>اضغط على الزر وتحدث، سيتم تحويل صوتك إلى نص:</p>
+    <input type="text" id="voiceInput" placeholder="النص الصوتي يظهر هنا" readonly style="width: 100%; padding: 10px; margin-bottom: 10px;">
+    <button onclick="startRecognition()">ابدأ التسجيل الصوتي</button>
+  </div>
+
+  <script>
+    function startRecognition() {
+      if ('webkitSpeechRecognition' in window) {
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = "ar-SA";  // اللغة العربية
+        recognition.onresult = function(event) {
+          document.getElementById('voiceInput').value = event.results[0][0].transcript;
+        };
+        recognition.onerror = function() {
+          alert('حدث خطأ أثناء التسجيل الصوتي. حاول مرة أخرى.');
+        };
+        recognition.start();
+      } else {
+        alert('المتصفح لا يدعم التسجيل الصوتي.');
+      }
+    }
+  </script>
+</body>
+</html>
